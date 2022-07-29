@@ -11,7 +11,7 @@ public class EnemySystem : MonoBehaviour
     public Animator anim;
     NavMeshAgent agent;
 
-    [SerializeField] private float moveSpeed = -3f;
+    [SerializeField] public float moveSpeed = 5f;
 
     void Start()
     {
@@ -32,6 +32,7 @@ public class EnemySystem : MonoBehaviour
         if (playerPosition.position.z > transform.position.z)
         {
             agent.SetDestination(playerPosition.position);
+            transform.LookAt(playerPosition.position);
             if (player.moveSpeed == 0)
             {
                 anim.SetBool("isRunning", false);

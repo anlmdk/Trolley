@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,11 +7,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public SwerveMovement player;
 
     [SerializeField] private GameObject gameWinPanel, gameLosePanel;
 
     [SerializeField] private TextMeshProUGUI scoreText, highScoreText;
-    [SerializeField] private GameObject startText;
+    [SerializeField] private GameObject startText, highScore;
 
     [SerializeField] private GameObject [] healthImage;
 
@@ -47,13 +50,18 @@ public class GameManager : MonoBehaviour
     }
     public void HitEnemy()
     {
-        scoreCount--;
-        scoreText.text = scoreCount.ToString();
-        healthCount--;
-        for(int i = healthImage.Length; i >= 0; i++)
+        if (scoreCount != 0)
         {
-            healthImage[i].SetActive(false);
+            scoreCount--;
+            scoreText.text = scoreCount.ToString();
         }
+        else
+        {
+            scoreCount = 0;
+        }
+        healthCount--;
+        healthImage[healthCount].gameObject.SetActive(false);
+
         if(healthCount == 0)
         {
             GameLose();
@@ -61,19 +69,32 @@ public class GameManager : MonoBehaviour
     }
     public void GameWin()
     {
-        gameWinPanel.SetActive(true);
         if(scoreCount > 10)
         {
+            highScore.SetActive(true);
             highScoreText.text = "HIGH SCORE: " + scoreText.text;
+            player.anim.SetBool("isFinish", true);
+            StartCoroutine(WaitForHighScore());
+        }
+        else
+        {
+            gameWinPanel.SetActive(true);
         }
     }
     public void GameLose()
     {
+        Time.timeScale = 0;
         gameLosePanel.SetActive(true);
         
     }
     public  void TryAgain()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public IEnumerator WaitForHighScore()
+    {
+        yield return new WaitForSeconds(5);
+        player.anim.SetBool("isFinish", false);
+        highScore.SetActive(false);
     }
 }

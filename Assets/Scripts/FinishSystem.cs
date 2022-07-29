@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class FinishSystem : MonoBehaviour
 {
-
     public SwerveMovement player;
+    public EnemySystem enemy;
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Finish"))
+        if (other.gameObject.CompareTag("Player"))
         {
             StartCoroutine(WaitForFinish());
+            GameManager.instance.GameWin();
         }
     }
     public IEnumerator WaitForFinish()
     {
-        yield return new WaitForSeconds(1f);
-        player.anim.SetBool("isWalking", false);
-        player.moveSpeed = 0f;
+        yield return new WaitForSeconds(0.5f);
+        player.moveSpeed = 0;
+        enemy.moveSpeed = 0;
     }
 }

@@ -30,6 +30,10 @@ public class SwerveMovement : MonoBehaviour
     {
         transform.Translate(0, 0, moveSpeed * Time.deltaTime);
         anim.SetBool("isWalking", true);
+        if(moveSpeed == 0)
+        {
+            anim.SetBool("isWalking", false);
+        }
     }
     public void SwerveSwipe()
     {
