@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     }
     public void HitEnemy()
     {
+
         if (scoreCount != 0)
         {
             scoreCount--;

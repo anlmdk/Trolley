@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class SwerveInputSystem : MonoBehaviour
 {
-    private float lastPositionX, lastPositionY;
-    private float directionX , directionY;
+    private float lastPositionX;
+    private float direction;
 
-    public float DirectionX => directionX;
-    public float DirectionY => directionY;
+    public float Direction => direction;
 
     void Update()
     {
@@ -19,20 +18,15 @@ public class SwerveInputSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             lastPositionX = Input.mousePosition.x;
-            lastPositionY = Input.mousePosition.y;
         }
         else if (Input.GetMouseButton(0))
         {
-            directionX = Input.mousePosition.x - lastPositionX;
+            direction = Input.mousePosition.x - lastPositionX;
             lastPositionX = Input.mousePosition.x;
-
-            directionY = Input.mousePosition.y - lastPositionY;
-            lastPositionY = Input.mousePosition.y;
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            directionX = 0f;
-            directionY = 0f;
+            direction = 0f;
         }
     }
 }

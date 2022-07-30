@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class StackManager : MonoBehaviour
 {
@@ -12,7 +11,6 @@ public class StackManager : MonoBehaviour
     void Start()
     {
         distanceBetweenObjects = prevObject.localScale.z *3;
-        DOTween.Init();
     }
     public void Stack(GameObject stackObject, bool needTag =false, string tag = null, bool downOrUp = true)
     {
