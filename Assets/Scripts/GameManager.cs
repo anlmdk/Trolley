@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public SwerveMovement player;
-
+    public Transform stack;
     [SerializeField] private GameObject gameWinPanel, gameLosePanel;
 
     [SerializeField] private TextMeshProUGUI scoreText, highScoreText;
@@ -50,10 +50,15 @@ public class GameManager : MonoBehaviour
     }
     public void HitEnemy()
     {
+
         if (scoreCount != 0)
         {
             scoreCount--;
             scoreText.text = scoreCount.ToString();
+            for (int i = stack.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
         }
         else
         {
@@ -93,8 +98,7 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator WaitForHighScore()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0.1f);
         player.anim.SetBool("isFinish", false);
-        highScore.SetActive(false);
     }
 }

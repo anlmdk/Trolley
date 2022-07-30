@@ -9,8 +9,10 @@ public class SwerveMovement : MonoBehaviour
     public Animator anim;
 
     [SerializeField] private float swipeSpeed = 0.5f;
-    [SerializeField] private float minSwipeAmount = 1f;
+    [SerializeField] private float minSwipeAmount = -1f;
     [SerializeField] private float maxSwipeAmount= 1f;
+    [SerializeField] private float minXAmount = -2.5f;
+    [SerializeField] private float maxXAmount = 2.5f;
     [SerializeField] public float moveSpeed = 5f;
 
     void Start()
@@ -29,6 +31,9 @@ public class SwerveMovement : MonoBehaviour
     public void Movement()
     {
         transform.Translate(0, 0, moveSpeed * Time.deltaTime);
+        float xVector = transform.position.x;
+        xVector = Mathf.Clamp(transform.position.x, minXAmount, maxXAmount);
+        transform.position = new Vector3(xVector, transform.position.y, transform.position.z);
         anim.SetBool("isWalking", true);
         if(moveSpeed == 0)
         {
