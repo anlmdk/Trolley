@@ -45,5 +45,9 @@ public class EnemySystem : MonoBehaviour
         {
             GameManager.instance.HitEnemy();
         }
+        else if (collision.gameObject.CompareTag("Collectible"))
+        {
+
+        }
     }
 }

@@ -50,15 +50,11 @@ public class GameManager : MonoBehaviour
     }
     public void HitEnemy()
     {
-
         if (scoreCount != 0)
         {
             scoreCount--;
             scoreText.text = scoreCount.ToString();
-            for (int i = stack.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
+            Destroy(stack.transform.GetChild(stack.transform.childCount - 1).gameObject);
         }
         else
         {
