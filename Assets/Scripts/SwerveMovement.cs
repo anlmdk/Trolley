@@ -5,7 +5,6 @@ using UnityEngine;
 public class SwerveMovement : MonoBehaviour
 {
     private SwerveInputSystem swerveInputSystem;
-    public GameManager gameManager;
     public Transform stack;
     public Animator anim;
 
@@ -27,7 +26,7 @@ public class SwerveMovement : MonoBehaviour
     }
     void Update()
     {
-        if (gameManager.gameStarted == true)
+        if (GameManager.instance.gameStarted == true)
         {
             Movement();
             SwerveSwipe();
@@ -54,8 +53,10 @@ public class SwerveMovement : MonoBehaviour
     public void Shoot()
     {
         float swerveAmountY = swerveInputSystem.DirectionY * swipeSpeed * Time.deltaTime;
-        swerveAmountY = Mathf.Clamp(swerveAmountY, minSwipeAmount, maxSwipeAmount);
+        //swerveAmountY = Mathf.Clamp(swerveAmountY, minSwipeAmount, maxSwipeAmount);
         stack.transform.GetChild(stack.transform.childCount - 1).gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        stack.transform.GetChild(stack.transform.childCount - 1).gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 2, 0.5f) * shootPower);
+        stack.transform.GetChild(stack.transform.childCount - 1).gameObject.GetComponent<Rigidbody>().useGravity = true;
+        stack.transform.GetChild(stack.transform.childCount - 1).gameObject.GetComponent<BoxCollider>().isTrigger = false;
+        stack.transform.GetChild(stack.transform.childCount - 1).gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * swerveAmountY, 0.5f * swerveAmountY) * shootPower);
     }
 }

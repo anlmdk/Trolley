@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemySystem : MonoBehaviour
 {
-    public GameManager gameManager;
     public SwerveMovement player;
     public Transform playerPosition;
     public Animator anim;
@@ -20,7 +19,7 @@ public class EnemySystem : MonoBehaviour
     }
     void Update()
     {
-        if(gameManager.gameStarted == true)
+        if(GameManager.instance.gameStarted == true)
         {
             Movement();
         }
@@ -47,6 +46,7 @@ public class EnemySystem : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Collectible"))
         {
+            GameManager.instance.scoreCount += 5;
             Destroy(gameObject);
         }
     }

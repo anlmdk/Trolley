@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public SwerveMovement player;
     public Transform stack;
+    public ParticleSystem fireworks;
     [SerializeField] private GameObject gameWinPanel, gameLosePanel;
 
     [SerializeField] private TextMeshProUGUI scoreText, highScoreText;
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject [] healthImage;
 
-    [SerializeField] private int scoreCount = 0;
+    public int scoreCount = 0;
     [SerializeField] private int healthCount = 3;
     public bool gameStarted = false;
 
@@ -50,7 +51,6 @@ public class GameManager : MonoBehaviour
     }
     public void HitEnemy()
     {
-
         if (scoreCount != 0)
         {
             scoreCount--;
@@ -74,8 +74,10 @@ public class GameManager : MonoBehaviour
         if(scoreCount > 10)
         {
             highScore.SetActive(true);
-            highScoreText.text = "HIGH SCORE: " + scoreText.text;
+            highScoreText.text = scoreText.text;
+            fireworks.Play();
             player.anim.SetBool("isFinish", true);
+
             StartCoroutine(WaitForHighScore());
         }
         else
