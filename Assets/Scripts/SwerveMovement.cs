@@ -6,8 +6,13 @@ public class SwerveMovement : MonoBehaviour
 {
     private SwerveInputSystem swerveInputSystem;
     public GameManager gameManager;
+    public Transform stack;
     public Animator anim;
 
+    //Shoot
+    [SerializeField] private float shootPower = 450f;
+
+    //Movement
     [SerializeField] private float swipeSpeed = 0.5f;
     [SerializeField] private float minSwipeAmount = -1f;
     [SerializeField] private float maxSwipeAmount= 1f;
@@ -42,8 +47,15 @@ public class SwerveMovement : MonoBehaviour
     }
     public void SwerveSwipe()
     {
-        float swerveAmount = swerveInputSystem.Direction * swipeSpeed * Time.deltaTime;
-        swerveAmount = Mathf.Clamp(swerveAmount, minSwipeAmount,maxSwipeAmount);
-        transform.Translate(swerveAmount, 0, 0);
+        float swerveAmountX = swerveInputSystem.DirectionX * swipeSpeed * Time.deltaTime;
+        swerveAmountX = Mathf.Clamp(swerveAmountX, minSwipeAmount,maxSwipeAmount);
+        transform.Translate(swerveAmountX, 0, 0);
+    }
+    public void Shoot()
+    {
+        float swerveAmountY = swerveInputSystem.DirectionY * swipeSpeed * Time.deltaTime;
+        swerveAmountY = Mathf.Clamp(swerveAmountY, minSwipeAmount, maxSwipeAmount);
+        stack.transform.GetChild(stack.transform.childCount - 1).gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        stack.transform.GetChild(stack.transform.childCount - 1).gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 2, 0.5f) * shootPower);
     }
 }
