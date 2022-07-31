@@ -24,6 +24,7 @@ public class StackManager : MonoBehaviour
 
         stackObject.transform.localPosition = desPos;
         prevObject = stackObject.transform;
+        prevObject.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -47,7 +47,7 @@ public class EnemySystem : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Collectible"))
         {
-
+            Destroy(gameObject);
         }
     }
 }

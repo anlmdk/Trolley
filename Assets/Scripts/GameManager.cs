@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
     }
     public  void TryAgain()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public IEnumerator WaitForHighScore()
